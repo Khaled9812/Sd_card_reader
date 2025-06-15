@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:manifest xmlns:ns2="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" format_version="3.14" api_version="2.0.0" configuration="88301dc80ac49b730c632f3117227218" id="SDK_2.x_MIMXRT1170-EVK" name="MIMXRT1170-EVK" brief="This is SDK version 2.16.000 manifest file. It describes the content of the MIMXRT1170-EVK and additional settings for tools that support SDK version 2.16.000">
+    <externalDefinitions>
+        <definition extID="isi_qmc_dgc"/>
+        <definition extID="evkbmimxrt1170"/>
+    </externalDefinitions>
+    <ksdk id="MCUXpresso216000" name="MCUXpresso216000" version="2.16.000" revision="epluginsite808 2024-07-15"/>
+    <compilers>
+        <compiler type="gcc" id="compiler_gcc" name="gcc"/>
+    </compilers>
+    <core_slave_roles_definitions>
+        <slave_role id="M4SLAVE" name="Cortex-M4 acts as slave by default"/>
+        <slave_role id="M7SLAVE" name="Cortex-M7 acts as slave by default"/>
+    </core_slave_roles_definitions>
+    <toolchainSettings>
+        <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" full_name="MCUXpresso IDE" version="11.10.0" toolchain="mcuxpresso" compiler="compiler_gcc">
+            <option id="gnu.cpp.compiler.option.optimization.flags" type="string" user_name="">
+                <value>-fno-common</value>
+            </option>
+            <option id="gnu.c.compiler.option.optimization.flags" type="string" user_name="">
+                <value>-fno-common</value>
+            </option>
+            <option id="gnu.cpp.link.option.nostdlibs" type="boolean" user_name="">
+                <value>true</value>
+            </option>
+            <option id="com.crt.advproject.link.cpp.flashconfigenable" type="boolean" user_name="">
+                <value>true</value>
+            </option>
+            <option id="com.crt.advproject.link.flashconfigenable" type="boolean" user_name="">
+                <value>true</value>
+            </option>
+            <option id="gnu.c.link.option.nostdlibs" type="boolean" user_name="">
+                <value>true</value>
+            </option>
+        </toolchainSetting>
+    </toolchainSettings>
+    <toolchains>
+        <toolchain type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com" id="mcuxpresso" name="MCUXpresso_IDE" full_name="MCUXpresso IDE" version="11.10.0" compiler="compiler_gcc">
+            <debug>
+                <debug_configuration probe="LinkServer" id="com.crt.advproject.config.exe.release" name="Release Configuration">
+                    <scripts>
+                        <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+                            <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}</script>
+                        </script>
+                        <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+                            <script>${run}</script>
+                        </script>
+                    </scripts>
+                    <params>
+                        <params value="false" id="vector.catch.release.mcuxpresso" name="vector.catch"/>
+                        <params value="Disable" id="internal.cache.release.mcuxpresso" name="internal.cache"/>
+                    </params>
+                </debug_configuration>
+                <debug_configuration probe="LinkServer" id="com.crt.advproject.config.exe.debug" name="Debug Configuration">
+                    <scripts>
+                        <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+                            <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}</script>
+                        </script>
+                        <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+                            <script>${run}</script>
+                        </script>
+                    </scripts>
+                    <params>
+                        <params value="false" id="vector.catch.debug.mcuxpresso" name="vector.catch"/>
+                        <params value="Disable" id="internal.cache.debug.mcuxpresso" name="internal.cache"/>
+                    </params>
+                </debug_configuration>
+                <debug_configuration probe="Segger" id="com.nxp.mcuxpresso.core.debug.support.segger.debug" name="Debug Configuration"/>
+                <debug_configuration probe="Segger" id="com.nxp.mcuxpresso.core.debug.support.segger.release" name="Release Configuration"/>
+            </debug>
+        </toolchain>
+    </toolchains>
+    <boards>
+        <board package="MIMXRT1176DVMAA" id="evkmimxrt1170" name="MIMXRT1170-EVK" href="https://www.nxp.com/pip/MIMXRT1170-EVK" version="1.0.0">
+            <description>i.MX RT1170 Evaluation Kit</description>
+            <image path="boards/evkmimxrt1170" type="image">
+                <files mask="evkmimxrt1170.png"/>
+            </image>
+            <memory>
+                <memoryBlock addr="30000000" size="04000000" type="ExtFlash" access="RO" id="BOARD_FLASH_evkmimxrt1170" name="BOARD_FLASH"/>
+                <memoryBlock addr="80000000" size="03000000" type="RAM" access="RW" id="BOARD_SDRAM_evkmimxrt1170" name="BOARD_SDRAM"/>
+                <memoryBlock addr="83000000" size="01000000" type="RAM" access="RW" id="NCACHE_REGION_evkmimxrt1170" name="NCACHE_REGION"/>
+            </memory>
+            <total_memory flash_size_kb="65536" ram_size_kb="32768"/>
+            <debug_configurations>
+                <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                    <drivers>
+                        <driver id_refs="BOARD_FLASH_evkmimxrt1170">
+                            <driverBinary path="devices/MIMXRT1176/mcuxpresso" type="binary">
+<files mask="MIMXRT1170_SFDP_QSPI.cfx"/>
+                            </driverBinary>
+                        </driver>
+                    </drivers>
+                </debug_configuration>
+            </debug_configurations>
+        </board>
+        <board package="MIMXRT1176DVMAA" type="kit" id="evkmimxrt1170_om13790host" name="MIMXRT1170-EVK-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0">
+            <description>i.MX RT1170 Evaluation Kit with USB Type-C Host Shield Board Gen 2 with Display Port Alt Mode</description>
+            <image path="boards/evkmimxrt1170_om13790host" type="image">
+                <files mask="evkmimxrt1170_om13790host.png"/>
+            </image>
+            <memory>
+                <memoryBlock addr="30000000" size="04000000" type="ExtFlash" access="RO" id="BOARD_FLASH_evkmimxrt1170_om13790host" name="BOARD_FLASH"/>
+                <memoryBlock addr="80000000" size="03000000" type="RAM" access="RW" id="BOARD_SDRAM_evkmimxrt1170_om13790host" name="BOARD_SDRAM"/>
+                <memoryBlock addr="83000000" size="01000000" type="RAM" access="RW" id="NCACHE_REGION_evkmimxrt1170_om13790host" name="NCACHE_REGION"/>
+            </memory>
+            <total_memory flash_size_kb="65536" ram_size_kb="32768"/>
+            <debug_configurations>
+                <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                    <drivers>
+                        <driver id_refs="BOARD_FLASH_evkmimxrt1170_om13790host">
+                            <driverBinary path="devices/MIMXRT1176/mcuxpresso" type="binary">
+<files mask="MIMXRT1170_SFDP_QSPI.cfx"/>
+                            </driverBinary>
+                        </driver>
+                    </drivers>
+                </debug_configuration>
+            </debug_configurations>
+        </board>
+        <board package="MIMXRT1176DVMAA" type="kit" id="evkmimxrt1170_agm01" name="MIMXRT1170-EVK-AGM01" href="https://www.nxp.com/pip/FRDM-STBC-AGM01" version="1.0.0">
+            <description>i.MX RT1170 Evaluation Kit with 9-Axis sensor shield board FRDM-STBC-AGM01 having FXAS21002C Gyroscope &amp; FXOS8700CQ E-compass sensors</description>
+            <image path="boards/evkmimxrt1170_agm01" type="image">
+                <files mask="evkmimxrt1170_agm01.png"/>
+            </image>
+            <memory>
+                <memoryBlock addr="30000000" size="04000000" type="ExtFlash" access="RO" id="BOARD_FLASH_evkmimxrt1170_agm01" name="BOARD_FLASH"/>
+                <memoryBlock addr="80000000" size="03000000" type="RAM" access="RW" id="BOARD_SDRAM_evkmimxrt1170_agm01" name="BOARD_SDRAM"/>
+                <memoryBlock addr="83000000" size="01000000" type="RAM" access="RW" id="NCACHE_REGION_evkmimxrt1170_agm01" name="NCACHE_REGION"/>
+            </memory>
+            <total_memory flash_size_kb="65536" ram_size_kb="32768"/>
+            <debug_configurations>
+                <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                    <drivers>
+                        <driver id_refs="BOARD_FLASH_evkmimxrt1170_agm01">
+                            <driverBinary path="devices/MIMXRT1176/mcuxpresso" type="binary">
+<files mask="MIMXRT1170_SFDP_QSPI.cfx"/>
+                            </driverBinary>
+                        </driver>
+                    </drivers>
+                </debug_configuration>
+            </debug_configurations>
+        </board>
+    </boards>
+    <devices>
+        <device family="MIMXRT1170" platform="i.MX" id="MIMXRT1176xxxxx" name="MIMXRT1176" full_name="MIMXRT1176xxxxx" version="1.0.0">
+            <description>MIMXRT1176: i.MX® MIMXRT1176 1GHz, 2MB RAM Microcontrollers (MCUs) based on ARM® Cortex®-M4 Core and ARM® Cortex®-M7 Core</description>
+            <metadataSet>
+                <metadata key="compatible_device.pemicro" value="IMXRT1176"/>
+                <metadata key="vendor" value="NXP"/>
+            </metadataSet>
+            <defines>
+                <define name="CPU_$|package|" value=""/>
+                <define name="CPU_$|package|_$|core|" value=""/>
+            </defines>
+            <core fpu="true" type="cm4" slave_roles="M4SLAVE" boot_role="primary_secondary" id="cm4_MIMXRT1176xxxxx" name="cm4">
+                <metadataSet>
+                    <metadata key="compatible_device.segger" value="MIMXRT1176xxxA_M4"/>
+                </metadataSet>
+                <memory>
+                    <memoryBlock addr="20000000" size="00020000" type="RAM" access="RW" id="SRAM_DTC_cm4_MIMXRT1176xxxxx" name="SRAM_DTC_cm4"/>
+                    <memoryBlock addr="1FFE0000" size="00020000" type="RAM" access="RW" id="SRAM_ITC_cm4_MIMXRT1176xxxxx" name="SRAM_ITC_cm4"/>
+                </memory>
+                <debug_configurations>
+                    <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                        <params>
+                            <params value="--no-packed --cachelib libahb_lmem.so" id="misc.options.MIMXRT1176xxxx.core_cm4.MIMXRT1176xxxxx" name="misc.options"/>
+                            <params value="1" id="internal.core.index.MIMXRT1176xxxx.core_cm4.MIMXRT1176xxxxx" name="internal.core.index"/>
+                        </params>
+                    </debug_configuration>
+                </debug_configurations>
+            </core>
+            <core fpu="true" type="cm7" slave_roles="M7SLAVE" boot_role="primary_secondary" id="cm7_MIMXRT1176xxxxx" name="cm7">
+                <metadataSet>
+                    <metadata key="compatible_device.segger" value="MIMXRT1176xxxA_M7"/>
+                </metadataSet>
+                <memory>
+                    <memoryBlock addr="20000000" size="00040000" type="RAM" access="RW" id="SRAM_DTC_cm7_MIMXRT1176xxxxx" name="SRAM_DTC_cm7"/>
+                    <memoryBlock addr="00000000" size="00040000" type="RAM" access="RW" id="SRAM_ITC_cm7_MIMXRT1176xxxxx" name="SRAM_ITC_cm7"/>
+                </memory>
+                <debug_configurations>
+                    <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                        <params>
+                            <params value="--no-packed" id="misc.options.MIMXRT1176xxxx.core_cm7.MIMXRT1176xxxxx" name="misc.options"/>
+                            <params value="0" id="internal.core.index.MIMXRT1176xxxx.core_cm7.MIMXRT1176xxxxx" name="internal.core.index"/>
+                        </params>
+                    </debug_configuration>
+                </debug_configurations>
+            </core>
+            <memory>
+                <memoryBlock addr="20240000" size="00080000" type="RAM" access="RW" id="SRAM_OC1_MIMXRT1176xxxxx" name="SRAM_OC1"/>
+                <memoryBlock addr="202C0000" size="00080000" type="RAM" access="RW" id="SRAM_OC2_MIMXRT1176xxxxx" name="SRAM_OC2"/>
+                <memoryBlock addr="20340000" size="00010000" type="RAM" access="RW" id="SRAM_OC_ECC1_MIMXRT1176xxxxx" name="SRAM_OC_ECC1"/>
+                <memoryBlock addr="20350000" size="00010000" type="RAM" access="RW" id="SRAM_OC_ECC2_MIMXRT1176xxxxx" name="SRAM_OC_ECC2"/>
+                <memoryBlock addr="20360000" size="00020000" type="RAM" access="RW" id="SRAM_OC_cm7_MIMXRT1176xxxxx" name="SRAM_OC_cm7"/>
+            </memory>
+            <total_memory flash_size_kb="0" ram_size_kb="128"/>
+            <package id="MIMXRT1176DVMAA" name="MIMXRT1176DVMAA"/>
+            <package id="MIMXRT1176AVM8A" name="MIMXRT1176AVM8A"/>
+            <package id="MIMXRT1176CVM8A" name="MIMXRT1176CVM8A"/>
+            <evaluation_boards>
+                <evaluation_board name="evkmimxrt1170"/>
+            </evaluation_boards>
+            <debug_configurations>
+                <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+                    <params>
+                        <params value="SWD" id="internal.wiretype.release.MIMXRT1176xxxxx" name="internal.wiretype"/>
+                        <params value="true" id="internal.has_swo.release.MIMXRT1176xxxxx" name="internal.has_swo"/>
+                        <params value="RT1170_connect_M7_wake_M4.scp" id="internal.connect.script.debug.mcuxpresso.MIMXRT1176xxxxx" name="internal.connect.script"/>
+                        <params value="RT1170_reset.scp" id="internal.connect.reset.debug.mcuxpresso.MIMXRT1176xxxxx" name="internal.reset.script"/>
+                    </params>
+                </debug_configuration>
+            </debug_configurations>
+            <linkerSettings nature="c_nature">
+                <linker property="start_symbol" value="ResetISR"/>
+                <linker property="text_align" value="4"/>
+                <linker property="data_align" value="4"/>
+                <linker property="bss_align" value="4"/>
+                <linker property="mtb_supported" value="false"/>
+            </linkerSettings>
+            <linkerSettings nature="cpp_nature">
+                <linker property="start_symbol" value="ResetISR"/>
+                <linker property="text_align" value="4"/>
+                <linker property="data_align" value="4"/>
+                <linker property="bss_align" value="4"/>
+                <linker property="mtb_supported" value="false"/>
+            </linkerSettings>
+        </device>
+    </devices>
+    <components>
+        <component user_visible="true" type="debugger" package_base_path="devices/MIMXRT1176" project_base_path="svd" category="Board Support/SDK Project Template" id="platform.devices.MIMXRT1176_debugger.MIMXRT1176" name="Device MIMXRT1176_debugger" full_name="Device MIMXRT1176_debugger" brief="Device MIMXRT1176_debugger" version="1.0.0">
+            <dependencies>
+                <device_dependency value="MIMXRT1176xxxxx"/>
+            </dependencies>
+            <source relative_path="./" type="xml" device_cores="cm4_MIMXRT1176xxxxx">
+                <files mask="MIMXRT1176_cm4.xml"/>
+            </source>
+            <source relative_path="./" type="xml" device_cores="cm7_MIMXRT1176xxxxx">
+                <files mask="MIMXRT1176_cm7.xml"/>
+            </source>
+        </component>
+    </components>
+</ns2:manifest>
